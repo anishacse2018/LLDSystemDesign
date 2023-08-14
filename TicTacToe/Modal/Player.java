@@ -6,7 +6,7 @@ class Player{
          this.name = name;
          this.piecetype = piecetype;
     }
-    public void getName(){
+    public String getName(){
        return this.name;
     }
     public PieceType getPieceType(){

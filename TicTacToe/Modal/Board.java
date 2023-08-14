@@ -1,3 +1,4 @@
+import java.util.*;
 public class Board{
 
     int size;
@@ -13,5 +14,39 @@ public class Board{
         gameboard[row][column]=piecetype;
         return true;
    }
+
+   public ArrayList<Pair> getEmptyCells(){
+      ArrayList<Pair> a = new ArrayList<>();
+      for(int i=0;i<size;i++){
+         for(int j=0;j<size;j++){
+            if(gameboard[i][j]==null){
+             Pair p = new Pair(i,j);
+              a.add(p);
+            }
+         }
+      }
+      return a;
+   }
+ 
+   public void printBoard(){
+      for(int i=0;i<size;i++){
+         for(int j=0;j<size;j++){
+            if(gameboard[i][j]!=null){
+                  System.out.println(gameboard[i][j]+" ");
+            }else{
+               System.out.println(" ");
+            }
+            System.out.println("| ");
+         }
+      }
+   }
    
+}
+class Pair{
+   int row;
+   int column;
+   Pair(int row, int column){
+     this.row = row;
+     this.column = column;
+   }
 }
