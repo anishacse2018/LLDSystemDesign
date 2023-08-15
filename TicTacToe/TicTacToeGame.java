@@ -30,8 +30,38 @@ public class TicTacToeGame{
                  continue;
             }
             players.addLast(p1);
-
+            boolean winner = isThereWinner(inputRow,inputCol,p1.getPieceType());
+            if(winner){
+                return p1.getName();
+            }
         }
+        return "tie";
     }
-
+   public boolean isThereWinner(int row,int column,PieceType piecetype){
+        boolean rowMatch =true;
+        boolean columnMatch = true;
+        boolean upperdiagonalMatch = true;
+        boolean lowerdiagonalMatch=true;
+        for(int i=0;i<3;i++){
+            if(gameboard.gameboard[row][i]==null || gameboard.gameboard[row][i]!=piecetype){
+                 rowMatch = false;
+            }
+        }
+        for(int i=0;i<3;i++){
+            if(gameboard.gameboard[i][column]==null || gameboard.gameboard[i][column]!=piecetype){
+                 columnMatch = false;
+            }
+        }
+        for(int i=0,j=0;i<3;i++,j++){
+            if(gameboard.gameboard[i][j]==null || gameboard.gameboard[i][j]!=piecetype){
+                upperdiagonalMatch = false;
+            }
+        }
+       for(int i=2,j=0;i>=0 && j<3;i--,j++){
+            if(gameboard.gameboard[i][j]==null || gameboard.gameboard[i][j]!=piecetype){
+                lowerdiagonalMatch = false;
+            }
+        }
+        return rowMatch || columnMatch || upperdiagonalMatch || lowerdiagonalMatch;
+   }
 }
