@@ -22,6 +22,7 @@ public class TicTacToeGame{
                noWinner = false;
                continue;
             }
+            System.out.println("It is " + p1.getName() +"'s Turn");
             System.out.println("Please enter row and column values: ");
             Scanner sc = new Scanner(System.in);
             int inputRow = sc.nextInt();
