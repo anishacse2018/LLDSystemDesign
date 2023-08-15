@@ -17,12 +17,16 @@ public class TicTacToeGame{
         while(noWinner){
             Player p1 = players.removeFirst();
             gameboard.printBoard();
+            ArrayList<Pair> freeSpaces = gameboard.getEmptyCells();
+            if(freeSpaces.isEmpty()){
+               noWinner = false;
+               continue;
+            }
+            System.out.println("Please enter row and column values: ");
             Scanner sc = new Scanner(System.in);
-            String s = sc.next();
-            sc.close();
-            String []values = s.split(",");
-            int inputRow = Integer.valueOf(values[0]);
-            int inputCol = Integer.valueOf(values[1]); 
+            int inputRow = sc.nextInt();
+            int inputCol = sc.nextInt(); 
+           // sc.close();
             boolean success = gameboard.addPiece(inputRow, inputCol, p1.getPieceType());
             if(!success){
                  System.out.println("Invalid values, try again");

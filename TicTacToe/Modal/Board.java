@@ -32,12 +32,13 @@ public class Board{
       for(int i=0;i<size;i++){
          for(int j=0;j<size;j++){
             if(gameboard[i][j]!=null){
-                  System.out.println(gameboard[i][j]+" ");
+                  System.out.print(gameboard[i][j]+" ");
             }else{
-               System.out.println(" ");
+               System.out.print(" ");
             }
-            System.out.println("| ");
+            System.out.print("| ");
          }
+         System.out.println();
       }
    }
    
