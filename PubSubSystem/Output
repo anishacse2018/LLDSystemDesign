@@ -1,0 +1,8 @@
+PubSub System Demo!
+Subscriber Subscriber 1 Received the message: Message1 from Topic1
+Subscriber Subscriber 2 Received the message: Message1 from Topic1
+This publisher can't publish to topic: Topic 2
+Subscriber Subscriber 3 Received the message: Message1 from Topic1 again
+Subscriber Subscriber 1 Received the message: Message3 for Topic1
+Subscriber Subscriber 2 Received the message: Message3 for Topic1
+Subscriber Subscriber 3 Received the message: Message4 for Topic2
