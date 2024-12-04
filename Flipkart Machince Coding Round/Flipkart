@@ -1,0 +1,140 @@
+https://docs.google.com/document/d/1h3aDVgJZBGxZFCeY0tEI6HmG9jR_geQS0Vsstr269m8/edit?tab=t.0#heading=h.y7brl7bfygul
+
+Affiliates Commissions App
+
+
+
+An affiliate, such as a popular YouTube channel, shares a Flipkart product link on their platform. When users click on the link and place an order, Flipkart pays a commission per order to the affiliate. The task is to design this system.
+
+Capabilities:
+An order consists of following attributes:
+Order Id
+Product Id
+CategoryId *
+Selling Price
+Brand *
+Seller Id
+Affiliate Id  (non mandatory attribute)
+Order timestamp
+
+Commission calculation:
+There are multiple commission rules defined in the system based on the attributes of an order
+Attributes marked with * can be used for defining commission rules
+A commission can be defined as either
+Flat Commission or
+Percentage Commission (of the selling price) with an upper limit
+E.g. 10% commission on Mobiles upto Rs.50, it can be represented as below
+
+{
+“Category”: “Mobiles”,
+“Percentage”: “10”,
+“MaxCap”: “50”
+},
+
+{
+“Category”: “MobileCovers”,
+“FlatRate”: “5”,
+}
+
+We need to calculate the commission when an order is placed.
+If there are conflicting rules for an order, choose any one.
+
+Order states:
+Following are the states possible for an order
+ORDER_CREATED
+ORDER_CANCELLED
+
+We expose an API to track these state changes for each orderId. If an order ends in an ORDER_CANCELLED state, no commission is paid. To optimize transaction fees, payouts occur only when the total commission reaches Rs. 100 or more. Each payout is assigned a unique transactionId for tracking.
+
+Example: Suppose two orders (o1 and o2) in the ORDER_CREATED state are associated with affiliate a1, each with a commission of Rs. 60.
+When the ORDER_CREATED event is received for o1, no payout is triggered as the total commission is less than Rs. 100.
+When the event is received for o2, the total commission reaches Rs. 120 (exceeding Rs. 100), so a transaction is created for o1 and o2.
+External Capabilities:
+Affiliates can retrieve all their orders, including:
+Total earnings
+OrderIds with their respective commission
+Admin can retrieve all orders by their state and affiliateId.
+
+Bonus Question:
+
+An affiliate can withdraw its earned amount, you have to reset earnings to zero after withdrawal and start tracking earnings on orders created after this withdrawal
+Expose a withdrawal transaction summary API which gives information about last 5 withdrawals like transactionId, amount withdrawn etc.
+
+
+Guidelines:
+Input can be read from a file or STDIN or coded in a driver method.
+Output can be written to a file or STDOUT.
+Feel free to store all interim/output data in-memory.
+Restrict internet usage to looking up syntax.
+Bonus Question is OPTIONAL, and should only be attempted once everything else is COMPLETE.
+You are free to use the language of your choice.
+Save your code/project by your name and email it. Your program will be executed on another machine. So, explicitly specify dependencies, if any, in your email.
+
+
+Expectations:
+Code should be demo-able (very important). Code should be functionally correct and complete. (Have a Main/Driver class to demo the code)
+At the end of this interview round, an interviewer will provide multiple inputs to your program for which it is expected to work 
+Code should handle edge cases properly and fail gracefully. Add suitable exception handling, wherever applicable.
+Code should have good object-oriented design.
+Code should be readable, modular, testable and extensible. Use intuitive names for your variables, methods and classes.
+It should be easy to add/remove functionality without rewriting a lot of code.
+Do not write monolithic code.
+Don’t use any databases, please use appropriate data structures to maintain the data in-memory.
+Only public methods need to be exposed (tested via Driver/Main class), REST apis are not needed.
+
+
+Sample Test Cases:
+These test cases are only provided for reference. You can change the method signatures suitably.
+
+Process Order Events
+processOrder(“order1”, 600.0, “pid1”, “Mobile”, Samsung, “affiliate1”, 6 April 2024 18:00:00, CREATED)
+processOrder(“order1”, CANCELLED)
+processOrder(“order2”, 200, pid2, Clothes, affiliate2, Nike, 10 March 2024)
+processOrder(“order3”, 500.0, “pid3”, “Electronics”, LG, “affiliat5”, 8 April 2024 18:00:00, CREATED)
+processOrder(“order2”, CANCELLED)
+
+
+2. Fetch Transactions By Affiliate
+fetchOrders(affiliate1)	
+		
+		Sample Output:
+{
+  "transactionId": "transaction1",
+  "totalAmountPaid": 110.0,
+  "orderComission": [
+    {
+      "orderId": "order1",
+      "commission": 60.0
+    },
+    {
+      "orderId": "order2",
+      "commission": 50.0
+    }
+  ]
+}
+
+3. Get All Orders By Affiliate And Order State
+getOrders(affiliate1, ORDER_CANCELLED)
+		
+		Sample Output:
+		{
+  "orders": [
+    {
+      "orderId": "order1",
+      "price": 600.0,
+      "productId": "pid1",
+      "category": "Mobile",
+      "timestamp": "6 April 2024 18:00:00",
+      "commission": 60.0
+    },
+    {
+      "orderId": "order2",
+      "price": 500.0,
+      "productId": "pid2",
+      "category": "Clothing",
+      "timestamp": "8 April 2024 18:00:00",
+      "commission": 50.0
+    }
+  ]
+}
+
